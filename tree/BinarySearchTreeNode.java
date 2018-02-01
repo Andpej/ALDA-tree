@@ -1,6 +1,8 @@
 package alda.tree;
 
 /**
+ * Andreas Pejle anpe1436 
+ * Patrick Virtanen pavi4902
  * 
  * Detta är den enda av de tre klasserna ni ska göra några ändringar i. (Om ni
  * inte vill lägga till fler testfall.) De ändringar som är tillåtna är dock
@@ -16,10 +18,6 @@ package alda.tree;
  * 
  * @param <T>
  */
-@SuppressWarnings("unused") // Denna rad ska plockas bort. Den finns här
-							// tillfälligt för att vi inte ska tro att det är
-							// fel i koden. Varningar ska normalt inte döljas på
-							// detta sätt, de är (oftast) fel som ska fixas.
 
 public class BinarySearchTreeNode<T extends Comparable<T>> {
 
@@ -36,23 +34,16 @@ public class BinarySearchTreeNode<T extends Comparable<T>> {
 		if (data == null) {
 			return false;
 		}
-		// Om den nya noden är större än den nuvarande -> gå höger
 		if (data.compareTo(this.data) > 0) {
-			// Anropar sig själv tills den når null
 			if (right != null) {
-				right.add(data);
-				// När den når null lägger den till en ny nod
+				return right.add(data);
 			} else {
 				right = new BinarySearchTreeNode<T>(data);
 				return true;
 			}
-		}
-		// Om den nya noden är mindre än den nuvarande -> gå vänster
-		else if (data.compareTo(this.data) < 0) {
-			// Anropar sig själv tils den når null
+		} else if (data.compareTo(this.data) < 0) {
 			if (left != null) {
-				left.add(data);
-				// När den når null lägger den till en ny nod
+				return left.add(data);
 			} else {
 				left = new BinarySearchTreeNode<T>(data);
 				return true;
@@ -62,53 +53,45 @@ public class BinarySearchTreeNode<T extends Comparable<T>> {
 	}
 
 	private T findMin() {
-		// så länge vänster sida ej pekar på null -> anropa sig själv
 		if (this.left != null) {
 			return this.left.findMin();
-		// returnerar det lägsta värdet till slut
 		} else {
 			return this.data;
 		}
 	}
-	
-	private T findMax() {
-		// så länge höger sida ej pekar på null -> anropa sig själv
-		if(this.right != null) {
-			return this.right.findMax();
-		// returnerar det högsta värdet till slut
-		} else {
-			return this.data;
-		}
-	}
-	
-	// 4 olika cases:
-	// 1. Noden finns inte i trädet
-	// 2. Noden som ska tas bort har ej några barn
-	// 3. Noden som ska tas bort har ett barn
-	// 4. Noden som ska tas bort har två barn
-	
+
 	public BinarySearchTreeNode<T> remove(T data) {
-	return null;
+
+		if (data.compareTo(this.data) > 0) {
+			if (right != null)
+				right = right.remove(data);
+
+		} else if (data.compareTo(this.data) < 0) {
+			if (left != null)
+				left = left.remove(data);
+
+		} else if (this.right != null && this.left != null) {
+			this.data = right.findMin();
+			right = right.remove(this.data);
+
+		} else {
+			return (right != null) ? right : left;
+		}
+		return this;
 	}
 
 	public boolean contains(T data) {
-		if (data == null) {
-			return false;
-		}
-		// Om sökt nod är större än aktuell -> gå höger
+
 		if (data.compareTo(this.data) > 0) {
 			if (right != null) {
 				return right.contains(data);
-			}  
-			return false;
-		}
-		// Om sökt nod är mindre än aktuell -> gå vänster
-		else if (data.compareTo(this.data) < 0) {
+			}
+
+		} else if (data.compareTo(this.data) < 0) {
 			if (left != null) {
 				return left.contains(data);
-			} 
-			return false;
-		// Om noden hittas
+			}
+
 		} else if (data.compareTo(this.data) == 0) {
 			return true;
 		}
@@ -116,59 +99,50 @@ public class BinarySearchTreeNode<T extends Comparable<T>> {
 	}
 
 	public int size() {
-		// Initierad till 1 för att räkna med root-noden
+
 		int sizeCounter = 1;
 
-		// Räknar alla i högerled tills null
 		if (right != null) {
 			sizeCounter += right.size();
 		}
-		// Räknar alla i vänsterled tills null
 		if (left != null) {
 			sizeCounter += left.size();
 		}
-		// Returnerar resultatet
 		return sizeCounter;
 	}
 
 	public int depth() {
-		// Räknare för både sidor av trädet
+
 		int depthRight = 0;
 		int depthLeft = 0;
 
-		//Räknar noder och nivåer på högersida
 		if (this.right != null) {
 			depthRight += this.right.depth() + 1;
 		}
-
-		//Räknar noder och nivåer på vänstersida
 		if (this.left != null) {
 			depthLeft += this.left.depth() + 1;
 		}
-		// Returnera höger- eller vänsterdjup beroende på storlek
 		if (depthRight > depthLeft) {
 			return depthRight;
 		} else {
 			return depthLeft;
 		}
 	}
-	
+
 	public String toString() {
-		
+
 		String treeString = "";
-		
-		if(data == null) {
+
+		if (data == null) {
 			return null;
 		}
-		// Kör vänstersida av träd toString med ", " mellan varje element
-		if(left != null) {
-		treeString += left.toString() + ", ";
+		if (left != null) {
+			treeString += left.toString() + ", ";
 		}
 		treeString += data;
-		// Kör högersida av träd toString med ", " mellan varje element
-		if(right != null) {
+		if (right != null) {
 			treeString += ", " + right.toString();
-		}	
+		}
 		return treeString;
 	}
 }
