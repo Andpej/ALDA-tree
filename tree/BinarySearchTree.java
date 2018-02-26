@@ -1,13 +1,5 @@
 package alda.tree;
 
-/**
- * Denna klass representerar ett binärt sökträd. Ni får inte ändra *NÅGOT* i
- * denna klass. Alla ändringar som krävs för att klassen ska fungera ska göras i
- * BinarySearchTreeNode.
- * 
- * @author henrikbe
- * 
- */
 public class BinarySearchTree<T extends Comparable<T>> {
 
 	private BinarySearchTreeNode<T> root;
