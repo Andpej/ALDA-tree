@@ -1,24 +1,5 @@
 package alda.tree;
 
-/**
- * Andreas Pejle anpe1436 
- * Patrick Virtanen pavi4902
- * 
- * Detta är den enda av de tre klasserna ni ska göra några ändringar i. (Om ni
- * inte vill lägga till fler testfall.) De ändringar som är tillåtna är dock
- * begränsade av följande:
- * <ul>
- * <li>Ni får INTE lägga till några fler instansvariabler.
- * <li>Ni får INTE lägga till några statiska variabler.
- * <li>Ni får INTE använda några loopar någonstans.
- * <li>Ni FÅR lägga till fler metoder, dessa ska då vara privata.
- * </ul>
- * 
- * @author henrikbe
- * 
- * @param <T>
- */
-
 public class BinarySearchTreeNode<T extends Comparable<T>> {
 
 	private T data;
